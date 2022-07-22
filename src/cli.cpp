@@ -1,32 +1,40 @@
 #include <Arduino.h>
 #include "cli.h"
 
-char line[LINE_BUF_SIZE];
-char args[MAX_NUM_ARGS][ARG_BUF_SIZE];
+CLI::CLI() {
 
-int parseArgs()
+}
+
+void CLI::do_loop() {
+    if (_parseArgs() == 0)
+    {
+        _clearArgs();
+    }
+}
+
+int CLI::_parseArgs()
 {
     String line_string;
 
     if (Serial.available())
     {
         line_string = Serial.readStringUntil('\n');
-        if (line_string.length() < LINE_BUF_SIZE)
+        if (line_string.length() < CLI_LINE_BUF_SIZE)
         {
-            line_string.toCharArray(line, LINE_BUF_SIZE);
+            line_string.toCharArray(_line, CLI_LINE_BUF_SIZE);
 
             char *argument;
             int counter = 0;
 
-            argument = strtok(line, " ");
+            argument = strtok(_line, " ");
 
             while ((argument != NULL))
             {
-                if (counter < MAX_NUM_ARGS)
+                if (counter < CLI_MAX_NUM_ARGS)
                 {
-                    if (strlen(argument) < ARG_BUF_SIZE)
+                    if (strlen(argument) < CLI_ARG_BUF_SIZE)
                     {
-                        strcpy(args[counter], argument);
+                        strcpy(_args[counter], argument);
                         argument = strtok(NULL, " ");
                         counter++;
                     }
@@ -54,8 +62,8 @@ int parseArgs()
     return 1;
 }
 
-void clearArgs()
+void CLI::_clearArgs()
 {
-    memset(line, 0, LINE_BUF_SIZE);
-    memset(args, 0, sizeof(args[0][0]) * MAX_NUM_ARGS * ARG_BUF_SIZE);
+    memset(_line, 0, CLI_LINE_BUF_SIZE);
+    memset(_args, 0, sizeof(_args[0][0]) * CLI_MAX_NUM_ARGS * CLI_ARG_BUF_SIZE);
 }
