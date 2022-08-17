@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "cli.h"
 
-char line[LINE_BUF_SIZE];
-char args[MAX_NUM_ARGS][ARG_BUF_SIZE];
+char line[kLineBufSize];
+char args[kMaxNumArgs][kArgBufSize];
 
 int parseArgs()
 {
@@ -11,9 +11,9 @@ int parseArgs()
     if (Serial.available())
     {
         line_string = Serial.readStringUntil('\n');
-        if (line_string.length() < LINE_BUF_SIZE)
+        if (line_string.length() < kLineBufSize)
         {
-            line_string.toCharArray(line, LINE_BUF_SIZE);
+            line_string.toCharArray(line, kLineBufSize);
 
             char *argument;
             int counter = 0;
@@ -22,9 +22,9 @@ int parseArgs()
 
             while ((argument != NULL))
             {
-                if (counter < MAX_NUM_ARGS)
+                if (counter < kMaxNumArgs)
                 {
-                    if (strlen(argument) < ARG_BUF_SIZE)
+                    if (strlen(argument) < kArgBufSize)
                     {
                         strcpy(args[counter], argument);
                         argument = strtok(NULL, " ");
@@ -56,6 +56,6 @@ int parseArgs()
 
 void clearArgs()
 {
-    memset(line, 0, LINE_BUF_SIZE);
-    memset(args, 0, sizeof(args[0][0]) * MAX_NUM_ARGS * ARG_BUF_SIZE);
+    memset(line, 0, kLineBufSize);
+    memset(args, 0, sizeof(args[0][0]) * kMaxNumArgs * kArgBufSize);
 }

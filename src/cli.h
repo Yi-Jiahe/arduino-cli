@@ -1,12 +1,12 @@
 #ifndef CLI_H
 #define CLI_H
 
-#define LINE_BUF_SIZE 128   //Maximum input string length
-#define ARG_BUF_SIZE 64     //Maximum argument string length
-#define MAX_NUM_ARGS 8      //Maximum number of arguments
+constexpr int kLineBufSize = 128   //Maximum input string length
+constexpr int kArgBufSize = 64     //Maximum argument string length
+constexpr int kMaxNumArgs = 8      //Maximum number of arguments
 
-extern char line[LINE_BUF_SIZE];
-extern char args[MAX_NUM_ARGS][ARG_BUF_SIZE];
+extern char line[kLineBufSize];
+extern char args[kMaxNumArgs][kArgBufSize];
 
 int parseArgs();
 void clearArgs();
