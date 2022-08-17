@@ -15,6 +15,8 @@ class CLI {
         char _line[CLI_LINE_BUF_SIZE];
         char _args[CLI_MAX_NUM_ARGS][CLI_ARG_BUF_SIZE];
 
+        map<string, int> _programs;
+
         int _parseArgs();
         void _clearArgs();
 };
